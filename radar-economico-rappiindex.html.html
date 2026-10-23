@@ -1,0 +1,840 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Radar Económico: Rappi</title>
+<meta name="description" content="Infografía interactiva: cómo la inflación, el consumo de los hogares y el comercio electrónico transforman a Rappi en Colombia, y qué decisión tomar.">
+<style>
+:root{
+  --orange:#FF441F; --orange-d:#C9300F; --orange-l:#FFE3D9; --cream:#FFF6F1; --card:#FFFFFF;
+  --ink:#241B1A; --muted:#6B5F5C; --line:#F0D9CF; --good:#1E7F55; --good-l:#DDF3E8;
+  --warn:#9A6200; --warn-l:#FFF0CC; --bad:#B42318; --bad-l:#FDE4E1; --blue:#2F5D8A; --blue-l:#E1ECF7;
+  --radius:18px; --shadow:0 1px 2px rgba(36,27,26,.06),0 8px 24px rgba(36,27,26,.07);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.55 "Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--orange-d)}
+a:focus-visible,button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--ink);outline-offset:2px;border-radius:6px}
+h1,h2,h3,h4{line-height:1.15;margin:0 0 .5em;letter-spacing:-.01em}
+h1{font-size:clamp(2rem,5.2vw,3.6rem);font-weight:800}
+h2{font-size:clamp(1.55rem,3.4vw,2.3rem);font-weight:800}
+h3{font-size:1.15rem;font-weight:700}
+p{margin:0 0 .9em}
+.ico{width:1.25em;height:1.25em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none;vertical-align:-.22em}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+
+/* Top bar */
+.top{position:sticky;top:0;z-index:20;background:rgba(255,246,241,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:14px;padding-top:10px;padding-bottom:10px}
+.brand{display:flex;align-items:center;gap:9px;font-weight:800;white-space:nowrap}
+.brand-dot{width:30px;height:30px;border-radius:9px;background:var(--orange);display:grid;place-items:center;color:#fff}
+.nav{display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin;padding:2px;margin-left:auto}
+.nav button{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:7px 13px;font:600 .88rem/1 inherit;font-family:inherit;cursor:pointer;white-space:nowrap;display:flex;gap:6px;align-items:center}
+.nav button:hover{border-color:var(--orange)}
+.nav button[aria-current="page"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.nav .letter{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--orange-l);color:var(--orange-d);font-size:.75rem;font-weight:800}
+.nav button[aria-current="page"] .letter{background:var(--orange);color:#fff}
+
+/* Hero / menu */
+.hero{background:linear-gradient(135deg,var(--orange) 0%,#FF6A3D 60%,#FF8A5C 100%);color:#fff;border-radius:0 0 32px 32px;position:relative;overflow:hidden}
+.hero .wrap{padding-top:44px;padding-bottom:48px;position:relative;z-index:1}
+.hero::after{content:"";position:absolute;right:-90px;top:-90px;width:340px;height:340px;border-radius:50%;background:rgba(255,255,255,.12)}
+.hero::before{content:"";position:absolute;right:120px;bottom:-120px;width:240px;height:240px;border-radius:50%;background:rgba(36,27,26,.10)}
+.kicker{display:inline-block;font-weight:700;font-size:.8rem;letter-spacing:.09em;text-transform:uppercase;background:rgba(36,27,26,.22);padding:5px 11px;border-radius:999px;margin-bottom:14px}
+.hero p.lead{font-size:1.12rem;max-width:62ch;opacity:.97}
+.statrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-top:22px}
+.stat{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);border-radius:14px;padding:12px 14px}
+.stat b{display:block;font-size:1.75rem;line-height:1.1}
+.stat span{font-size:.84rem;opacity:.95}
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:26px 0 12px}
+.menu-card{text-align:left;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;cursor:pointer;box-shadow:var(--shadow);font:inherit;color:inherit;transition:transform .15s,border-color .15s}
+.menu-card:hover{transform:translateY(-3px);border-color:var(--orange)}
+.menu-card .badge{width:44px;height:44px;border-radius:13px;background:var(--orange-l);color:var(--orange-d);display:grid;place-items:center;margin-bottom:10px}
+.menu-card .badge .ico{width:24px;height:24px}
+.menu-card small{display:block;color:var(--orange-d);font-weight:800;letter-spacing:.06em}
+.menu-card strong{display:block;font-size:1.08rem;margin:2px 0 4px}
+.menu-card span.d{color:var(--muted);font-size:.9rem}
+.howto{display:flex;gap:10px;align-items:flex-start;background:var(--blue-l);color:#1d3d5c;border-radius:14px;padding:12px 14px;font-size:.92rem;margin-top:10px}
+
+/* Views */
+.view{padding:30px 0 40px}
+.view[hidden]{display:none}
+.sec-head{display:flex;gap:14px;align-items:center;margin-bottom:6px}
+.sec-letter{width:52px;height:52px;border-radius:16px;background:var(--orange);color:#fff;display:grid;place-items:center;font-weight:800;font-size:1.5rem;flex:none}
+.sec-sub{color:var(--muted);max-width:70ch;margin-bottom:22px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow)}
+.card h3{display:flex;gap:8px;align-items:center}
+.card h3 .ico{color:var(--orange)}
+.big{font-size:2.3rem;font-weight:800;line-height:1;color:var(--orange-d)}
+.tag{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.04em;padding:3px 8px;border-radius:999px;vertical-align:middle;white-space:nowrap}
+.tag.h{background:var(--good-l);color:var(--good)}
+.tag.i{background:var(--warn-l);color:var(--warn)}
+.tag.hip{background:var(--blue-l);color:var(--blue)}
+.tag.dec{background:var(--orange-l);color:var(--orange-d)}
+.tag.ok{background:var(--good-l);color:var(--good)}
+.tag.ex{background:var(--warn-l);color:var(--warn)}
+.question{background:var(--ink);color:#fff;border-radius:var(--radius);padding:20px 22px;margin-top:18px;display:flex;gap:14px;align-items:flex-start}
+.question .ico{width:30px;height:30px;color:var(--orange);margin-top:2px}
+.question b{color:#FFB199}
+.src{font-size:.82rem;color:var(--muted)}
+.src a{color:var(--muted)}
+ul.clean{margin:0;padding-left:1.1em}
+ul.clean li{margin:.25em 0}
+.news{border-left:6px solid var(--orange);background:linear-gradient(90deg,#fff,#FFF9F6)}
+.newsnums{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:12px 0}
+.newsnums div{background:var(--orange-l);border-radius:12px;padding:10px 12px}
+.newsnums b{display:block;font-size:1.5rem;color:var(--orange-d);line-height:1.1}
+.newsnums span{font-size:.82rem;color:var(--muted)}
+
+/* Charts */
+.chart{margin-top:10px}
+.chart svg{width:100%;height:auto;display:block;overflow:visible}
+.chart text{font-family:inherit}
+.bar{cursor:pointer;transition:opacity .15s}
+.bar:hover,.bar:focus-visible{opacity:.82}
+.bar.sel{stroke:var(--ink);stroke-width:2}
+.readout{margin-top:6px;min-height:2.6em;background:var(--cream);border:1px dashed var(--line);border-radius:10px;padding:7px 11px;font-size:.9rem}
+.chart-title{font-weight:700;font-size:.95rem;margin:2px 0 0}
+.chart-note{font-size:.8rem;color:var(--muted)}
+
+/* Accordion */
+.acc{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:12px;overflow:hidden}
+.acc>button{width:100%;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;text-align:left;border:0;background:#fff;padding:16px 18px;cursor:pointer;font:inherit;color:inherit}
+.acc>button:hover{background:#FFFAF7}
+.acc .num{width:42px;height:42px;border-radius:12px;background:var(--orange);color:#fff;display:grid;place-items:center;font-weight:800}
+.acc .h-title{font-weight:700;display:block}
+.acc .h-fig{font-size:1.5rem;font-weight:800;color:var(--orange-d);line-height:1.15}
+.acc .chev{transition:transform .2s}
+.acc>button[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.acc .panel{padding:4px 20px 20px;border-top:1px solid var(--line)}
+.acc .panel[hidden]{display:none}
+dl.facts{display:grid;grid-template-columns:minmax(120px,170px) 1fr;gap:8px 14px;margin:12px 0 0}
+dl.facts dt{font-weight:700;color:var(--muted);font-size:.88rem}
+dl.facts dd{margin:0}
+@media(max-width:640px){dl.facts{grid-template-columns:1fr}dl.facts dt{margin-top:6px}}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}
+.btn{border:1px solid var(--ink);background:var(--ink);color:#fff;border-radius:999px;padding:9px 16px;font:700 .9rem/1 inherit;font-family:inherit;cursor:pointer;display:inline-flex;gap:7px;align-items:center}
+.btn.ghost{background:#fff;color:var(--ink)}
+.btn:hover{background:var(--orange);border-color:var(--orange);color:#fff}
+.btn.primary{background:var(--orange);border-color:var(--orange)}
+.btn.primary:hover{background:var(--orange-d);border-color:var(--orange-d)}
+
+/* Summary table */
+.tablewrap{overflow-x:auto;border-radius:14px;border:1px solid var(--line);background:#fff}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--orange-l);font-size:.82rem;text-transform:uppercase;letter-spacing:.04em}
+tr:last-child td{border-bottom:0}
+td.score{text-align:center;font-weight:700}
+
+/* Tabs */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.tabs button{border:1px solid var(--line);background:#fff;border-radius:14px;padding:10px 14px;cursor:pointer;font:600 .95rem/1.1 inherit;font-family:inherit;display:flex;gap:8px;align-items:center}
+.tabs button:hover{border-color:var(--orange)}
+.tabs button[aria-selected="true"]{background:var(--orange);border-color:var(--orange);color:#fff}
+.tri{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.tri .box{border-radius:14px;padding:14px 16px;border:1px solid var(--line);background:#fff}
+.tri .box h4{display:flex;gap:6px;align-items:center;font-size:.95rem;margin-bottom:.4em}
+.tri .opp{background:var(--good-l);border-color:#BFE5D1}
+.tri .opp h4{color:var(--good)}
+.tri .risk{background:var(--bad-l);border-color:#F6C3BD}
+.tri .risk h4{color:var(--bad)}
+.tri .cons{background:var(--orange-l);border-color:#FFC9B8}
+.tri .cons h4{color:var(--orange-d)}
+.legend{display:flex;gap:10px;flex-wrap:wrap;font-size:.85rem;color:var(--muted);margin:0 0 14px}
+
+/* Decision */
+.alts{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.alt{text-align:left;background:#fff;border:2px solid var(--line);border-radius:var(--radius);padding:16px 18px;cursor:pointer;font:inherit;color:inherit;box-shadow:var(--shadow);position:relative}
+.alt:hover{border-color:var(--orange)}
+.alt[aria-pressed="true"]{border-color:var(--orange);background:#FFF7F3}
+.alt .letter{width:34px;height:34px;border-radius:10px;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:800;margin-bottom:8px}
+.alt[aria-pressed="true"] .letter{background:var(--orange)}
+.alt strong{display:block;margin-bottom:3px}
+.alt span.d{color:var(--muted);font-size:.9rem}
+.alt .rec{position:absolute;top:12px;right:12px}
+.detail{margin-top:14px}
+.verdict{border-radius:14px;padding:12px 16px;margin-top:12px;font-weight:600}
+.verdict.good{background:var(--good-l);color:#14563a}
+.verdict.mid{background:var(--warn-l);color:#704700}
+.sliders{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px 22px;margin-top:12px}
+.slider label{display:flex;justify-content:space-between;gap:10px;font-size:.9rem;font-weight:600}
+.slider input[type=range]{width:100%;accent-color:var(--orange)}
+.slider .hint{font-size:.78rem;color:var(--muted)}
+.rank{display:grid;gap:8px;margin-top:10px}
+.rank .row{display:grid;grid-template-columns:150px 1fr 50px;gap:10px;align-items:center;font-size:.92rem}
+.rank .track{background:var(--line);border-radius:999px;height:16px;overflow:hidden}
+.rank .fill{height:100%;background:#BBA79F;border-radius:999px;transition:width .3s}
+.rank .row.top .fill{background:var(--orange)}
+.rank .row.top b{color:var(--orange-d)}
+@media(max-width:560px){.rank .row{grid-template-columns:110px 1fr 44px;font-size:.85rem}}
+.steps{counter-reset:s;list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.steps li{counter-increment:s;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px 12px 54px;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:12px;top:12px;width:30px;height:30px;border-radius:50%;background:var(--orange);color:#fff;display:grid;place-items:center;font-weight:800}
+.steps small{color:var(--muted)}
+
+/* Pager */
+.pager{display:flex;justify-content:space-between;gap:10px;margin-top:30px;flex-wrap:wrap}
+.refs{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.refs li{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 14px;padding-left:2.2em;text-indent:-1.4em;font-size:.9rem}
+.refs li .tag{text-indent:0;margin-left:6px}
+footer{background:var(--ink);color:#EADCD6;margin-top:20px;padding:22px 0;font-size:.88rem}
+footer a{color:#FFB199}
+.sr{position:absolute;left:-9999px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 22s7-6.5 7-12a7 7 0 10-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></symbol>
+    <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></symbol>
+    <symbol id="i-cart" viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l3 12h11l2-8H6"/></symbol>
+    <symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3-6 7-6s7 2.5 7 6"/><circle cx="18" cy="9" r="2.5"/><path d="M18 14c2.5 0 4 1.7 4 4"/></symbol>
+    <symbol id="i-factory" viewBox="0 0 24 24"><path d="M3 21V10l6 3V10l6 3V6h6v15z"/><path d="M7 17h2M12 17h2M17 17h2"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 5-14 15-14 0 10-6 15-14 15"/><path d="M5 19c3-5 6-8 10-10"/></symbol>
+    <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18M5 21h14M5 7h14"/><path d="M5 7l-3 7a3 3 0 006 0zM19 7l-3 7a3 3 0 006 0z"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6M9 13h8M9 17h8"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1"/></symbol>
+    <symbol id="i-next" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-prev" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 12l7-7"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 13H6z"/><path d="M9 8V6a3 3 0 016 0v2"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand"><span class="brand-dot"><svg class="ico"><use href="#i-target"/></svg></span><span>Radar Económico · Rappi</span></div>
+    <nav class="nav" id="nav" aria-label="Secciones de la infografía"></nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- MENÚ -->
+<section class="view" id="v-menu" data-view="menu" aria-labelledby="t-menu" style="padding-top:0">
+  <div class="hero">
+    <div class="wrap">
+      <span class="kicker">Seminario de Política Económica y Social · R2 · A5 · S10</span>
+      <h1 id="t-menu" tabindex="-1">Rappi frente a la inflación: crecer más rápido de lo que gasta el cliente</h1>
+      <p class="lead">Las compras en línea crecen más de 30 %, pero el pedido promedio cae y los hogares gastan solo 2,8 % más. ¿Qué debería hacer Rappi en Colombia? Recorre las cinco secciones, abre los indicadores y prueba tu propia decisión.</p>
+      <div class="statrow">
+        <div class="stat"><b>+31,1 %</b><span>transacciones online, 2.º trim. 2026 (CCCE)</span></div>
+        <div class="stat"><b>6,29 %</b><span>inflación anual, septiembre 2026 (DANE)</span></div>
+        <div class="stat"><b>+2,8 %</b><span>consumo de hogares, 2.º trim. 2026 (DANE)</span></div>
+        <div class="stat"><b>+160 %</b><span>pedidos de corrientazo en lo corrido de 2026 (Rappi)</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="menu-grid" id="menuGrid"></div>
+    <div class="howto"><svg class="ico"><use href="#i-info"/></svg><div><b>Cómo usarla.</b> Navega con los botones superiores o las tarjetas. En <i>Panorama</i> despliega cada indicador; en <i>Transformación</i> elige una dimensión; en <i>Decisión</i> compara alternativas y mueve los pesos para ver si la recomendación cambia.</div></div>
+  </div>
+</section>
+
+<!-- A CONTEXTO -->
+<section class="view" id="v-contexto" data-view="contexto" aria-labelledby="t-contexto" hidden>
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-letter">A</div><h2 id="t-contexto" tabindex="-1">Contexto: una plataforma que crece por frecuencia</h2></div>
+    <p class="sec-sub">Rappi conecta usuarios, comercios aliados y repartidores. Los datos de la empresa son declarados por ella y no han sido auditados por este trabajo.</p>
+
+    <div class="grid3">
+      <div class="card"><div class="big">30 %+</div><p>Crecimiento anual declarado en Colombia.<br><span class="tag dec">Declarado por la empresa</span></p><p class="src"><a href="https://www.bloomberglinea.com/latinoamerica/colombia/no-nos-obsesiona-salir-a-bolsa-gerente-de-rappi-en-colombia/" target="_blank" rel="noopener">Bloomberg Línea</a></p></div>
+      <div class="card"><div class="big">$210.176 M</div><p>Utilidades de Rappi Colombia en 2025, 116,1 % más que en 2024 ($97.250 millones).<br><span class="tag h">Hecho</span></p><p class="src"><a href="https://www.portafolio.co/negocios/empresas/rappi-alcanza-la-rentabilidad-en-colombia-dejando-atras-casi-una-decada-de-perdidas-498279" target="_blank" rel="noopener">Portafolio, con datos de la Superintendencia de Sociedades</a></p></div>
+      <div class="card"><div class="big">70.000+</div><p>Repartidores activos en Colombia, con un ingreso promedio declarado de $11.000 por hora.<br><span class="tag dec">Declarado por la empresa</span></p><p class="src"><a href="https://batimes.com.ar/news/latin-america/anything-in-10-minutes-us-5-billion-delivery-app-sweeps-latin-america.phtml" target="_blank" rel="noopener">Buenos Aires Times</a></p></div>
+    </div>
+
+    <div class="grid2" style="margin-top:16px">
+      <div class="card">
+        <h3><svg class="ico"><use href="#i-bag"/></svg>Sector y problema</h3>
+        <p>Las plataformas de entrega compiten por la <b>frecuencia</b> de uso. Rappi también ofrece servicios financieros (RappiPay), farmacia, mercado y viajes.</p>
+        <p><b>El desafío:</b> el cliente compra más seguido pero gasta menos por pedido, y la operación tendrá costos laborales formalizados.</p>
+        <ul class="clean">
+          <li>Inflación 6,29 % y tasa del Banco de la República en 12,25 %.</li>
+          <li>Ticket del comercio electrónico −8,1 %.</li>
+          <li>Decreto de seguridad social para repartidores independientes, cuestionado por el gremio de plataformas.</li>
+        </ul>
+        <p class="src" style="margin-top:8px">No hay información pública sobre márgenes ni costo por pedido de Rappi: cualquier cálculo interno sería hipótesis.</p>
+      </div>
+      <div class="card news">
+        <h3><svg class="ico"><use href="#i-bolt"/></svg>Noticia: el corrientazo se dispara</h3>
+        <p class="src">20 de octubre de 2026 · Portafolio · cifras informadas por Rappi</p>
+        <div class="newsnums">
+          <div><b>+160 %</b><span>pedidos en lo corrido de 2026</span></div>
+          <div><b>250 mil → 660 mil</b><span>pedidos de corrientazo</span></div>
+          <div><b>84 %</b><span>se pide entre 11:00 y 14:59</span></div>
+          <div><b>80 %</b><span>de los restaurantes son pymes</span></div>
+        </div>
+        <p>Más de 800 negocios pequeños ofrecen corrientazo por menos de $19.900. Por qué importa: es demanda de bajo ticket, concentrada en unas horas, que crece con fuerza en ciudades intermedias.</p>
+        <p class="src"><a href="https://www.portafolio.co/negocios/empresas/el-corrientazo-gana-terreno-en-colombia-rappi-reporta-un-aumento-del-160-en-pedidos-en-504789" target="_blank" rel="noopener">Leer la noticia original</a></p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h3><svg class="ico"><use href="#i-pin"/></svg>¿Dónde crece más el corrientazo?</h3>
+      <p class="chart-note">Variación de pedidos de corrientazo en lo corrido de 2026 frente a 2025, por ciudad. Toca una barra para ver el detalle.</p>
+      <div class="chart" id="ch-cities"></div>
+      <div class="readout" id="ro-cities" aria-live="polite">Toca o enfoca una barra.</div>
+      <p class="src">Fuente: Portafolio (20 oct. 2026), con cifras de Rappi.</p>
+    </div>
+
+    <div class="question"><svg class="ico"><use href="#i-target"/></svg><div><b>Pregunta orientadora.</b> ¿Cómo puede Rappi sostener su crecimiento en ciudades intermedias con inflación de 6,29 %, consumo débil y mayores costos laborales, sin trasladar todo el costo al usuario ni deteriorar el ingreso de repartidores y comercios?</div></div>
+
+    <div class="pager" data-pager></div>
+  </div>
+</section>
+
+<!-- B PANORAMA -->
+<section class="view" id="v-panorama" data-view="panorama" aria-labelledby="t-panorama" hidden>
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-letter">B</div><h2 id="t-panorama" tabindex="-1">Panorama económico: tres indicadores</h2></div>
+    <p class="sec-sub">Demanda del canal, poder de compra y consumo de los hogares. Todos son datos observados, no proyecciones. Despliega cada indicador para ver cifra, periodo, comparación, explicación y fuente.</p>
+    <div class="toolbar">
+      <button class="btn ghost" id="openAll" type="button">Abrir todos</button>
+      <button class="btn ghost" id="closeAll" type="button">Cerrar todos</button>
+    </div>
+    <div id="indicators"></div>
+
+    <div class="card" style="margin-top:18px">
+      <h3><svg class="ico"><use href="#i-chart"/></svg>Tabla comparativa</h3>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Indicador</th><th>Valor</th><th>Periodo</th><th>Comparación</th><th>Lectura para Rappi</th></tr></thead>
+        <tbody id="indTable"></tbody>
+      </table></div>
+      <p class="src" style="margin-top:8px">Consulta: 23 de octubre de 2026. Las comparaciones usan el mismo periodo del año anterior; no se comparan trimestres con años completos.</p>
+    </div>
+
+    <div class="card" style="margin-top:16px;background:var(--warn-l);border-color:#F2D78C">
+      <h3 style="color:var(--warn)"><svg class="ico" style="color:var(--warn)"><use href="#i-info"/></svg>Advertencias de rigor</h3>
+      <ul class="clean">
+        <li>El informe original de la CCCE del segundo trimestre no se pudo abrir; las cifras vienen de un medio que cita a la CCCE.</li>
+        <li>Ese medio reporta +12,4 % frente al primer trimestre, pero con los datos de la CCCE el cálculo da cerca de +20 %. Por eso solo se usan comparaciones anuales.</li>
+        <li>Para el primer trimestre de 2026 hay dos cifras de ventas ($39,72 y $39,37 billones) según la fuente; no se usa ese dato.</li>
+      </ul>
+    </div>
+    <div class="pager" data-pager></div>
+  </div>
+</section>
+
+<!-- C TRANSFORMACIÓN -->
+<section class="view" id="v-transformacion" data-view="transformacion" aria-labelledby="t-transformacion" hidden>
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-letter">C</div><h2 id="t-transformacion" tabindex="-1">Transformación: cinco dimensiones del sector</h2></div>
+    <p class="sec-sub">El negocio crece por volumen, pero cada pedido deja menos margen. Elige una dimensión para ver su oportunidad, su riesgo y su consecuencia empresarial.</p>
+    <div class="legend"><span><span class="tag h">H</span> hecho documentado</span><span><span class="tag i">I</span> inferencia razonable</span><span><span class="tag hip">Hip</span> hipótesis de este trabajo</span></div>
+    <div class="tabs" role="tablist" aria-label="Dimensiones" id="dimTabs"></div>
+    <div id="dimPanel" role="tabpanel" aria-live="polite"></div>
+    <div class="pager" data-pager></div>
+  </div>
+</section>
+
+<!-- D DECISIÓN -->
+<section class="view" id="v-decision" data-view="decision" aria-labelledby="t-decision" hidden>
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-letter">D</div><h2 id="t-decision" tabindex="-1">Decisión: ¿qué debería hacer Rappi?</h2></div>
+    <p class="sec-sub">Tres alternativas, siete criterios. Elige la que tú tomarías y luego mueve los pesos para comprobar si la recomendación resiste.</p>
+
+    <h3>1. Elige tu decisión</h3>
+    <div class="alts" id="alts" role="group" aria-label="Alternativas"></div>
+    <div class="detail card" id="altDetail" aria-live="polite"></div>
+
+    <h3 style="margin-top:26px">2. Prueba otros pesos</h3>
+    <div class="card">
+      <p style="margin:0">Cada criterio se puntúa de 1 a 5 (5 = más favorable). La puntuación ponderada es un <b>juicio del equipo con pesos explícitos</b>, no un resultado estadístico. Mueve los controles: los pesos se reescalan a 100 %.</p>
+      <div class="sliders" id="sliders"></div>
+      <div class="toolbar" style="margin-top:12px"><button class="btn ghost" id="resetW" type="button">Restablecer pesos del equipo</button></div>
+      <div class="rank" id="rank" aria-live="polite"></div>
+      <div class="verdict mid" id="rankMsg" style="display:none"></div>
+      <h3 style="margin-top:18px">Puntajes por criterio</h3>
+      <div class="tablewrap"><table id="matrix"></table></div>
+    </div>
+
+    <h3 style="margin-top:26px">3. Plan de la alternativa recomendada</h3>
+    <ol class="steps" id="plan"></ol>
+
+    <h3 style="margin-top:22px">4. Indicadores de seguimiento</h3>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Indicador</th><th>Fórmula</th><th>Unidad</th><th>Frecuencia</th><th>Meta <span class="tag hip">hipótesis</span></th></tr></thead>
+      <tbody id="kpis"></tbody>
+    </table></div>
+    <p class="src" style="margin-top:8px">Las metas son hipótesis de trabajo: no hay datos internos de Rappi para fijarlas con evidencia y deben calibrarse con la línea base del piloto. Responsables propuestos por este trabajo, no asignados por la empresa.</p>
+    <div class="pager" data-pager></div>
+  </div>
+</section>
+
+<!-- E EVIDENCIAS -->
+<section class="view" id="v-evidencias" data-view="evidencias" aria-labelledby="t-evidencias" hidden>
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-letter">E</div><h2 id="t-evidencias" tabindex="-1">Evidencias: fuentes, límites y uso de IA</h2></div>
+    <p class="sec-sub">Cada cifra de esta infografía enlaza a su fuente. Las etiquetas indican si la página fue abierta completa o si solo se revisó un extracto de búsqueda.</p>
+
+    <div class="grid2">
+      <div class="card">
+        <h3><svg class="ico"><use href="#i-shield"/></svg>Hechos, inferencias e hipótesis</h3>
+        <ul class="clean">
+          <li><span class="tag h">Hecho</span> dato publicado por una fuente (DANE, CCCE, prensa que cita a la empresa).</li>
+          <li><span class="tag dec">Declarado</span> cifra dada por Rappi y no verificada de forma independiente.</li>
+          <li><span class="tag i">Inferencia</span> deducción razonable a partir de los hechos.</li>
+          <li><span class="tag hip">Hipótesis</span> propuesta de este trabajo sin evidencia directa; incluye todas las metas y ahorros.</li>
+        </ul>
+        <p class="src" style="margin-top:8px">No se afirma que Rappi use agrupación de pedidos, optimización de rutas ni una tecnología específica: no hay evidencia pública verificable.</p>
+      </div>
+      <div class="card">
+        <h3><svg class="ico"><use href="#i-cpu"/></svg>Registro del uso de inteligencia artificial</h3>
+        <ul class="clean">
+          <li>Se usó una IA (Claude) como apoyo para <b>buscar fuentes, organizar el contenido, analizar los datos y diseñar la infografía</b>.</li>
+          <li>Los datos clave se contrastaron entre varias páginas de prensa y con extractos de los comunicados del DANE y la CCCE; solo la nota del comercio electrónico y la noticia de Rappi se leyeron completas. El resto son extractos de búsqueda por contrastar.</li>
+          <li>El equipo debe revisar y validar: la numeración del decreto de repartidores (algunas fuentes lo citan como 099 y otras como 0991), el informe original de la CCCE, el dato de consumo de hogares del segundo trimestre de 2025 (+3,7 %), los puntajes de la matriz y las metas.</li>
+          <li>La IA no inventó cifras de Rappi; donde no hay datos públicos, se declara el vacío.</li>
+        </ul>
+        <p class="src" style="margin-top:8px">Equipo: <span id="team"></span></p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:24px">Referencias (APA 7)</h3>
+    <ul class="refs" id="refs"></ul>
+    <div class="pager" data-pager></div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    Actividad académica Radar Económico (R2 · A5 · S10) · Universidad de Cundinamarca · Datos consultados el 23 de octubre de 2026. Infografía sin fines comerciales; Rappi es una marca de sus titulares y este trabajo no está afiliado a la empresa.
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ====== CONFIGURACIÓN: el equipo edita estas líneas ====== */
+var TEAM = ["Integrante 1", "Integrante 2", "Integrante 3"];   // reemplazar por los nombres reales
+var COMPANY = "Rappi S.A.S.";
+
+/* ====== DATOS ====== */
+var SECTIONS = [
+  {id:"contexto",       letter:"A", icon:"i-bag",   name:"Contexto",       desc:"Rappi, el problema y la noticia del corrientazo"},
+  {id:"panorama",       letter:"B", icon:"i-chart", name:"Panorama",       desc:"Tres indicadores con cifra, periodo y fuente"},
+  {id:"transformacion", letter:"C", icon:"i-cpu",   name:"Transformación", desc:"Tecnología, mercado, empleo, operación y sostenibilidad"},
+  {id:"decision",       letter:"D", icon:"i-scale", name:"Decisión",       desc:"Compara alternativas y prueba tus pesos"},
+  {id:"evidencias",     letter:"E", icon:"i-doc",   name:"Evidencias",     desc:"Referencias APA 7, límites y registro de IA"}
+];
+
+var CITIES = [
+  {label:"Villavicencio", value:533}, {label:"Ibagué", value:414}, {label:"Santa Marta", value:346},
+  {label:"Cartagena", value:306}, {label:"Bogotá", value:239}, {label:"Valledupar", value:238}, {label:"Barranquilla", value:228}
+];
+
+var INDICATORS = [
+  {
+    id:"ecom", title:"Comercio electrónico en Colombia", figure:"223,87 millones de transacciones · $41,81 billones",
+    sub:"Más compras, pedido más pequeño",
+    chart:{type:"hbar", title:"Variación anual, 2.º trimestre 2026 frente al 2.º de 2025 (%)", unit:" %", decimals:1, rows:[
+      {label:"Transacciones", value:31.1, note:"223,87 millones de compras en línea, frente a cerca de 170,8 millones un año antes (cálculo a partir de la variación informada)."},
+      {label:"Ventas (pesos corrientes)", value:20.5, note:"$41,81 billones frente a $34,69 billones en el 2.º trimestre de 2025."},
+      {label:"Ventas (pesos constantes)", value:13.8, note:"$28,78 billones constantes; es el crecimiento real, descontada la inflación."},
+      {label:"Ticket promedio", value:-8.1, note:"$186.755 por compra, 8,1 % menos que un año antes; en términos reales cayó 13,9 %."}
+    ]},
+    facts:[
+      ["Definición","Compras en línea registradas por la Cámara Colombiana de Comercio Electrónico (CCCE). El ticket promedio es valor de ventas dividido entre número de ventas."],
+      ["Valor","223,87 millones de transacciones y $41,81 billones de ventas (pesos corrientes)."],
+      ["Periodo","Segundo trimestre de 2026 (abril a junio), trimestre completo."],
+      ["Comparación","Mismo trimestre de 2025: ventas de $34,69 billones. Transacciones +31,1 %; ventas +20,5 % nominal y +13,8 % real; ticket −8,1 %."],
+      ["Relación con Rappi","Mide el mercado donde Rappi compite: la gente compra más seguido pero gasta menos en cada pedido."],
+      ["Implicación","<span class='tag ok'>Oportunidad</span> pedidos pequeños y frecuentes, como el corrientazo. <span class='tag ex' style='background:var(--bad-l);color:var(--bad)'>Riesgo</span> el ticket baja y el costo por pedido pesa más."],
+      ["Publicación y consulta","Informe de la CCCE reportado por ITSitio el 4 de septiembre de 2026; consultado el 23 de octubre de 2026."],
+      ["Fuente","<a href='https://www.itsitio.com/co/dispositivos/el-e-commerce-en-colombia-bate-record-de-transacciones-y-crece-311/' target='_blank' rel='noopener'>ITSitio, con datos de la CCCE</a> (no se abrió el informe original del 2.º trimestre). Referencia del 1.er trimestre: <a href='https://ccce.org.co/wp-content/uploads/2017/06/Publico_V1-2026-IInforme-1er-trimestre-economico.pdf' target='_blank' rel='noopener'>CCCE</a>."],
+      ["Tipo de dato","<span class='tag h'>Dato observado</span> reportado por un medio que cita a la CCCE."]
+    ],
+    row:["Comercio electrónico (CCCE)","223,87 M transacciones; $41,81 billones","2.º trim. 2026","Transacciones +31,1 %; ventas reales +13,8 %; ticket −8,1 %","Más frecuencia, menos valor por pedido"]
+  },
+  {
+    id:"ipc", title:"Inflación anual (IPC)", figure:"6,29 % en septiembre de 2026",
+    sub:"El costo de vida sigue subiendo",
+    chart:{type:"vbar", title:"Inflación anual (%) y meta de largo plazo", unit:" %", decimals:2, ref:{value:3, label:"Meta del Banco de la República: 3 %"}, rows:[
+      {label:"Sep. 2025", value:5.18, note:"Inflación anual de septiembre de 2025: 5,18 %."},
+      {label:"Ago. 2026", value:6.24, note:"Inflación anual de agosto de 2026: 6,24 %."},
+      {label:"Sep. 2026", value:6.29, note:"Inflación anual de septiembre de 2026: 6,29 %, con 0,37 % de variación mensual."}
+    ]},
+    facts:[
+      ["Definición","Variación del Índice de Precios al Consumidor en los últimos 12 meses: cuánto más cuesta la canasta de los hogares."],
+      ["Valor","6,29 % anual; 0,37 % mensual; 5,74 % acumulado entre enero y septiembre de 2026."],
+      ["Periodo","Septiembre de 2026."],
+      ["Comparación","Septiembre de 2025: 5,18 % (+1,11 puntos porcentuales). Agosto de 2026: 6,24 %. Acumulado enero a septiembre de 2025: 4,55 %."],
+      ["Relación con Rappi","Alimentos (+6,74 % anual) y arriendo suben: encarecen la canasta del cliente y los costos de restaurantes y repartidores."],
+      ["Implicación","<span class='tag ex' style='background:var(--bad-l);color:var(--bad)'>Riesgo</span> el cliente es sensible al precio y puede pedir menos o más barato. <span class='tag ok'>Oportunidad</span> ofertas de almuerzo accesible. El Banco de la República subió su tasa a 12,25 % (30 de septiembre), lo que encarece el crédito."],
+      ["Publicación y consulta","DANE, 7 de octubre de 2026; consultado el 23 de octubre de 2026."],
+      ["Fuente","<a href='https://www.bluradio.com/economia/la-inflacion-en-colombia-fue-de-0-37-en-septiembre-de-2026-segun-el-dane-rg10' target='_blank' rel='noopener'>Blu Radio</a> y <a href='https://www.valoraanalitik.com/?p=616281' target='_blank' rel='noopener'>Valora Analitik</a>, con datos del DANE; tasa en la <a href='https://www.banrep.gov.co/es/sen-boletines-diarios?page=16' target='_blank' rel='noopener'>página de novedades del Banco de la República</a>."],
+      ["Tipo de dato","<span class='tag h'>Dato observado</span> (extractos de prensa que reproducen el boletín del DANE)."]
+    ],
+    row:["Inflación anual (DANE)","6,29 %","Septiembre 2026","+1,11 pp frente a sep. 2025 (5,18 %)","Encarece al cliente y la operación"]
+  },
+  {
+    id:"hogares", title:"Consumo de los hogares", figure:"+2,8 % anual en el 2.º trimestre de 2026",
+    sub:"El gasto de los hogares crece menos que la economía",
+    chart:{type:"hbar", title:"Crecimiento anual por componente, 2.º trimestre 2026 (%)", unit:" %", decimals:1, rows:[
+      {label:"Bienes durables", value:15.9, note:"Los hogares compran más bienes de larga duración (muebles, electrodomésticos, vehículos)."},
+      {label:"Consumo del gobierno", value:12.2, ctx:true, note:"No es consumo de hogares: se muestra porque explica buena parte del 3,5 % del PIB. Sin él, BBVA Research estima un PIB cercano a 1,8 %."},
+      {label:"Servicios", value:2.0, note:"Gasto de los hogares en servicios (incluye restaurantes y entregas a domicilio)."},
+      {label:"Total hogares", value:2.8, note:"Consumo final de los hogares: +2,8 % anual, frente a +3,7 % en el 2.º trimestre de 2025."},
+      {label:"Bienes no durables", value:1.6, note:"Alimentos y bienes de uso corriente."}
+    ]},
+    facts:[
+      ["Definición","Crecimiento del gasto de consumo final de los hogares dentro del PIB, calculado por el DANE."],
+      ["Valor","+2,8 % anual (volumen). El PIB total creció 3,5 %."],
+      ["Periodo","Segundo trimestre de 2026 (abril a junio)."],
+      ["Comparación","Segundo trimestre de 2025: +3,7 % (dato de una nota de prensa sobre ese periodo; por contrastar en el DANE). Bajó 0,9 puntos porcentuales."],
+      ["Relación con Rappi","Muestra cuánto puede gastar el cliente: crece el gasto en bienes durables (+15,9 %) pero poco en servicios (+2,0 %) y bienes no durables (+1,6 %)."],
+      ["Implicación","<span class='tag ex' style='background:var(--bad-l);color:var(--bad)'>Riesgo</span> demanda de hogares débil; el crecimiento del PIB se apoyó en el gasto público (+12,2 %). <span class='tag ok'>Oportunidad</span> productos de bajo precio y alta frecuencia."],
+      ["Publicación y consulta","DANE, 18 de agosto de 2026; consultado el 23 de octubre de 2026."],
+      ["Fuente","<a href='https://www.dane.gov.co/files/operaciones/PIB/cp-PIB-IItrim2026.pdf' target='_blank' rel='noopener'>DANE, comunicado de prensa del PIB</a> y <a href='https://www.elcolombiano.com/negocios/pib-colombia-crecio-35-gasto-publico-2026-EC40061137' target='_blank' rel='noopener'>El Colombiano</a> (componentes y análisis de BBVA Research)."],
+      ["Tipo de dato","<span class='tag h'>Dato observado</span> preliminar (el DANE lo marca como cifra preliminar)."]
+    ],
+    row:["Consumo de los hogares (DANE)","+2,8 % anual","2.º trim. 2026","−0,9 pp frente al 2.º trim. 2025 (+3,7 %)","Poco margen para gastar más"]
+  }
+];
+
+var DIMS = [
+  {id:"tec", name:"Tecnología", icon:"i-cpu",
+   opp:{t:"Rappi prueba pedidos por mensaje de voz en WhatsApp, en versión beta. Con los datos de pedidos podrían personalizarse ofertas de almuerzo.", tag:"H"},
+   risk:{t:"No hay evidencia pública de cómo Rappi optimiza rutas o agrupa pedidos; invertir sin datos propios puede no pagarse.", tag:"I"},
+   cons:"Priorizar herramientas que bajen el costo por pedido antes que nuevas funciones de marketing.",
+   links:[["Valora Analitik","https://www.valoraanalitik.com/mensaje-voz-whatsapp-rappi-pedidos-2026/"]]},
+  {id:"mer", name:"Mercado", icon:"i-cart",
+   opp:{t:"El corrientazo pasó de más de 250.000 a más de 660.000 pedidos y el 84 % se pide entre 11:00 y 14:59.", tag:"H"},
+   risk:{t:"Ticket promedio −8,1 % y consumo de hogares +2,8 %: el cliente compra más seguido pero gasta menos por pedido.", tag:"H"},
+   cons:"Competir por frecuencia y precio accesible, no solo por promociones. La CCCE estima $2,4 billones en el Hot Sale del 16 al 23 de octubre (estimación).",
+   links:[["Portafolio","https://www.portafolio.co/negocios/empresas/el-corrientazo-gana-terreno-en-colombia-rappi-reporta-un-aumento-del-160-en-pedidos-en-504789"],["ABC Economía","https://abceconomia.co/?p=55809"]]},
+  {id:"emp", name:"Empleo", icon:"i-people",
+   opp:{t:"La Ley 2466 de 2025 crea un esquema de aportes compartidos a seguridad social y un decreto de 2026 lo reglamenta (algunas fuentes citan el número como 099 y otras como 0991).", tag:"H"},
+   risk:{t:"Alianza In, el gremio de las plataformas, rechaza el decreto porque, según ella, encarece la seguridad social y puede destruir empleos. Es una posición del gremio, no un hecho probado.", tag:"H"},
+   cons:"Los costos laborales subirán o se repartirán. Con 70.000+ repartidores declarados, el efecto agregado puede ser material.",
+   consTag:"I",
+   links:[["Valora Analitik","https://www.valoraanalitik.com/?p=478787"],["DPL News","https://dplnews.com/alianza-in-rechaza-decreto-petro-repartidores/"],["Noticias RCN","https://www.noticiasrcn.com/economia/decreto-0991-de-2026-cambios-para-repartidores-1048352"]]},
+  {id:"ope", name:"Producción y operación", icon:"i-factory",
+   opp:{t:"La concentración del almuerzo en cuatro horas permite programar capacidad y agrupar pedidos cercanos.", tag:"I"},
+   risk:{t:"Agrupar puede alargar los tiempos de entrega y bajar la satisfacción si se hace mal.", tag:"I"},
+   cons:"Medir pedidos por hora de reparto y costo logístico por pedido; si no mejoran, el modelo no se sostiene.",
+   links:[]},
+  {id:"sos", name:"Sostenibilidad", icon:"i-leaf",
+   opp:{t:"Menos viajes por pedido si se consolidan entregas cercanas y menos recorridos vacíos de repartidores.", tag:"Hip"},
+   risk:{t:"No hay datos públicos de Rappi sobre emisiones, empaques o desperdicio: no se afirma que existan ahorros.", tag:"H"},
+   cons:"Reportar un indicador propio (viajes por pedido) en vez de prometer beneficios ambientales sin medición.",
+   links:[]}
+];
+
+var CRITERIA = [
+  {id:"costo",  name:"Costos de implementación", w:15, hint:"5 = costo bajo"},
+  {id:"benef",  name:"Beneficios económicos potenciales", w:20, hint:"5 = beneficio alto"},
+  {id:"usu",    name:"Efectos sobre usuarios", w:15, hint:"5 = efecto muy favorable"},
+  {id:"ali",    name:"Efectos sobre comercios y repartidores", w:15, hint:"5 = efecto muy favorable"},
+  {id:"ries",   name:"Riesgos operativos, tecnológicos y regulatorios", w:15, hint:"5 = riesgo bajo"},
+  {id:"tiem",   name:"Tiempo y dificultad", w:10, hint:"5 = rápido y fácil"},
+  {id:"viab",   name:"Viabilidad en el contexto colombiano", w:10, hint:"5 = muy viable con inflación de 6,29 % y tasa de 12,25 %"}
+];
+var ALTS = [
+  {id:"A", name:"Almuerzo accesible con pedidos agrupados", short:"A. Pedidos agrupados", recommended:true, scores:[3,4,4,4,3,3,4],
+   desc:"Rappi consolida pedidos de corrientazo cercanos en la franja de 11:00 a 14:59 en ciudades intermedias, con tarifa baja y alianza con restaurantes pequeños.",
+   pros:["Baja el costo por pedido sin subir la tarifa al usuario.","Aprovecha demanda que ya existe (+160 % en corrientazos).","Puede mejorar el ingreso por hora de los repartidores."],
+   cons:["Exige ajustar la asignación de repartidores y medir tiempos.","Si se agrupa mal, la entrega se demora.","Depende de que el decreto laboral no cambie de forma drástica."],
+   why:"Es la única alternativa que ataca el costo por pedido, que es donde está el problema: el ticket cae mientras el volumen sube."},
+  {id:"B", name:"Traslado de costos a tarifas y comisiones", short:"B. Traslado de costos", scores:[5,3,2,2,2,5,2],
+   desc:"Sube la tarifa de servicio o la comisión a comercios para absorber la seguridad social de los repartidores.",
+   pros:["Es rápida y barata de implementar.","Protege el margen de Rappi en el corto plazo."],
+   cons:["Con inflación de 6,29 %, el cliente reacciona al precio y compra menos.","Los restaurantes pequeños tienen poco margen para aceptar más comisión.","No mejora la eficiencia operativa."],
+   why:"No se recomienda como estrategia principal porque traslada el problema al usuario y a los comercios en un momento de poco margen."},
+  {id:"C", name:"Promociones generales de precio", short:"C. Promociones", scores:[2,3,5,3,3,5,2],
+   desc:"Mantiene el volumen con descuentos amplios a usuarios, como se hace en fechas de alta demanda.",
+   pros:["El usuario lo percibe de inmediato.","Es fácil de lanzar."],
+   cons:["Es un subsidio que reduce el margen y es difícil de sostener con tasa de 12,25 %.","Atrae clientes que compran solo con descuento.","No resuelve el costo por pedido ni los aportes laborales."],
+   why:"Gana en efecto sobre usuarios, pero en viabilidad financiera es débil: compra volumen sin mejorar el costo por pedido."}
+];
+
+var PLAN = [
+  ["Piloto en Villavicencio, Ibagué y Santa Marta","Gerencia de país y operaciones · meses 0 a 3 · seguimiento: pedidos por hora de reparto"],
+  ["Asignar repartidores por zona y agrupar pedidos cercanos en la franja del almuerzo","Tecnología y operaciones · meses 1 a 4 · seguimiento: tiempo medio de entrega"],
+  ["Acuerdos de menú del día con restaurantes pymes y crédito para aliados de RappiPay","Comercial y RappiPay · meses 2 a 6 · seguimiento: retención de comercios del piloto"],
+  ["Calcular el costo por pedido con los aportes de seguridad social del decreto vigente","Finanzas y asuntos laborales · continuo · seguimiento: costo logístico por pedido"],
+  ["Evaluar y decidir si se escala","Comité directivo · meses 6 a 9 · seguimiento: cumplimiento de las metas"]
+];
+var KPIS = [
+  ["Pedidos por hora de reparto","Pedidos entregados ÷ horas conectadas de repartidores","Pedidos/hora","Semanal","+10 % frente a la línea base"],
+  ["Costo logístico por pedido","(Pago a repartidores + aportes + otros costos de entrega) ÷ pedidos entregados","Pesos por pedido","Mensual","−5 % frente a la línea base"],
+  ["Tiempo medio de entrega en almuerzo","Promedio de (hora de entrega − hora del pedido)","Minutos","Diaria","No más de +3 min frente a la línea base"],
+  ["Retención de usuarios de almuerzo a 60 días","Usuarios que repiten en 60 días ÷ usuarios con primer pedido de almuerzo","Porcentaje","Mensual","+3 puntos porcentuales"]
+];
+
+var REFS = [
+  ["Banco de la República. (2026). <i>Novedades: la Junta Directiva aumentó la tasa de interés de política monetaria a 12,25 %</i> [Página web]. https://www.banrep.gov.co/es/sen-boletines-diarios?page=16", "ex"],
+  ["Cámara Colombiana de Comercio Electrónico. (2026, mayo). <i>Informe trimestral de comercio electrónico 2026-I</i>. https://ccce.org.co/wp-content/uploads/2017/06/Publico_V1-2026-IInforme-1er-trimestre-economico.pdf", "ex"],
+  ["Departamento Administrativo Nacional de Estadística. (2026, 18 de agosto). <i>En el segundo trimestre de 2026 el Producto Interno Bruto de Colombia crece 3,5 %</i> [Comunicado de prensa]. https://www.dane.gov.co/files/operaciones/PIB/cp-PIB-IItrim2026.pdf", "ex"],
+  ["Redacción de ITSitio. (2026, 4 de septiembre). El e-commerce en Colombia bate récord de transacciones y crece 31,1 %. <i>ITSitio Colombia</i>. https://www.itsitio.com/co/dispositivos/el-e-commerce-en-colombia-bate-record-de-transacciones-y-crece-311/", "ok"],
+  ["Silva Hernández, B. (2026, 20 de octubre). El corrientazo gana terreno en Colombia: Rappi reporta un aumento del 160 % en pedidos en 2026. <i>Portafolio</i>. https://www.portafolio.co/negocios/empresas/el-corrientazo-gana-terreno-en-colombia-rappi-reporta-un-aumento-del-160-en-pedidos-en-504789", "ok"],
+  ["Blu Radio. (2026). La inflación en Colombia fue de 0,37 % en septiembre, según el DANE. <i>Blu Radio</i>. https://www.bluradio.com/economia/la-inflacion-en-colombia-fue-de-0-37-en-septiembre-de-2026-segun-el-dane-rg10", "ex"],
+  ["Valora Analitik. (2026). Inflación en Colombia volvió a acelerarse a septiembre, pero se mantuvo dentro de expectativas del mercado. <i>Valora Analitik</i>. https://www.valoraanalitik.com/?p=616281", "ex"],
+  ["El Colombiano. (2026). El PIB creció 3,5 % en el segundo trimestre por encima de lo esperado, impulsado por el gasto público. <i>El Colombiano</i>. https://www.elcolombiano.com/negocios/pib-colombia-crecio-35-gasto-publico-2026-EC40061137", "ex"],
+  ["Portafolio. (2026). PIB de Colombia creció 3,5 % en el segundo trimestre, pero gasto público fue decisivo para acelerar la economía. <i>Portafolio</i>. https://www.portafolio.co/economia/pib-de-colombia-crecio-3-5-en-el-segundo-trimestre-pero-gasto-publico-fue-decisivo-para-acelerar-la-economia-500677", "ex"],
+  ["Portafolio. (2026). Rappi alcanza la rentabilidad en Colombia, dejando atrás casi una década de pérdidas. <i>Portafolio</i>. https://www.portafolio.co/negocios/empresas/rappi-alcanza-la-rentabilidad-en-colombia-dejando-atras-casi-una-decada-de-perdidas-498279", "ex"],
+  ["Bloomberg Línea. (2026). “No nos obsesiona salir a bolsa”: gerente de Rappi en Colombia. <i>Bloomberg Línea</i>. https://www.bloomberglinea.com/latinoamerica/colombia/no-nos-obsesiona-salir-a-bolsa-gerente-de-rappi-en-colombia/", "ex"],
+  ["Buenos Aires Times. (2026, agosto). Anything in 10 minutes: US$5 billion delivery app sweeps Latin America. <i>Buenos Aires Times</i>. https://batimes.com.ar/news/latin-america/anything-in-10-minutes-us-5-billion-delivery-app-sweeps-latin-america.phtml", "ex"],
+  ["Valora Analitik. (2025). Gremio de aplicaciones celebró beneficios para repartidores en la reforma laboral. <i>Valora Analitik</i>. https://www.valoraanalitik.com/?p=478787", "ex"],
+  ["DPL News. (2026). Alianza In rechaza decreto de Petro sobre repartidores y pide al nuevo gobierno derogarlo. <i>DPL News</i>. https://dplnews.com/alianza-in-rechaza-decreto-petro-repartidores/", "ex"],
+  ["Noticias RCN. (2026). Repartidores de Rappi y otras plataformas tendrán nuevas reglas: Gobierno Petro dejó firmado el decreto. <i>Noticias RCN</i>. https://www.noticiasrcn.com/economia/decreto-0991-de-2026-cambios-para-repartidores-1048352", "ex"],
+  ["Valora Analitik. (2026). Entrevista: con solo un mensaje de voz por WhatsApp, Rappi le apostará a atender pedidos en 2026. <i>Valora Analitik</i>. https://www.valoraanalitik.com/mensaje-voz-whatsapp-rappi-pedidos-2026/", "ex"],
+  ["ABC Economía. (2026). El Hot Sale en Colombia proyecta ventas por $2,4 billones entre el 16 y el 23 de octubre de 2026. <i>ABC Economía</i>. https://abceconomia.co/?p=55809", "ex"]
+];
+
+/* ====== UTILIDADES ====== */
+function $(s,r){return (r||document).querySelector(s)}
+function $$(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
+function ico(n){return '<svg class="ico" aria-hidden="true"><use href="#'+n+'"/></svg>'}
+function fmt(n,d){return n.toLocaleString("es-CO",{minimumFractionDigits:d,maximumFractionDigits:d})}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function tagHTML(t){var m={H:["h","H · hecho"],I:["i","I · inferencia"],Hip:["hip","Hip · hipótesis"]};var x=m[t]||m.H;return '<span class="tag '+x[0]+'">'+x[1]+'</span>'}
+
+/* ====== GRÁFICOS (SVG propio, sin librerías) ====== */
+function hbar(el, cfg, readout){
+  var rows=cfg.rows, W=640, left=170, right=70, rowH=38, top=8, H=top+rows.length*rowH+24;
+  var min=Math.min(0,Math.min.apply(null,rows.map(function(r){return r.value}))), max=Math.max.apply(null,rows.map(function(r){return r.value}));
+  var span=(max-min)||1, plotW=W-left-right, x0=left+(0-min)/span*plotW;
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(cfg.title||"Gráfico de barras")+'">';
+  s+='<line x1="'+x0+'" y1="'+top+'" x2="'+x0+'" y2="'+(top+rows.length*rowH)+'" stroke="#241B1A" stroke-width="1.5"/>';
+  rows.forEach(function(r,i){
+    var y=top+i*rowH+6, w=Math.abs(r.value)/span*plotW, x=r.value>=0?x0:x0-w;
+    var col=r.value<0?"#B42318":(r.ctx?"#BBA79F":"#FF441F");
+    s+='<text x="'+(left-10)+'" y="'+(y+14)+'" text-anchor="end" font-size="13" fill="#241B1A">'+esc(r.label)+'</text>';
+    s+='<rect class="bar" tabindex="0" role="button" data-i="'+i+'" x="'+x+'" y="'+y+'" width="'+Math.max(w,2)+'" height="22" rx="6" fill="'+col+'"><title>'+esc(r.label)+': '+fmt(r.value,cfg.decimals||0)+(cfg.unit||"")+'</title></rect>';
+    var lx=r.value>=0?x+w+6:x-6, anchor=r.value>=0?"start":"end";
+    s+='<text x="'+lx+'" y="'+(y+15)+'" text-anchor="'+anchor+'" font-size="13" font-weight="700" fill="#241B1A">'+(r.value>0?"+":"")+fmt(r.value,cfg.decimals||0)+(cfg.unit||"")+'</text>';
+  });
+  s+='</svg>';
+  el.innerHTML=s; wireBars(el,cfg,readout);
+}
+function vbar(el, cfg, readout){
+  var rows=cfg.rows, W=640, H=300, left=46, bottom=44, top=24, right=16;
+  var max=Math.max(cfg.ref?cfg.ref.value:0, Math.max.apply(null,rows.map(function(r){return r.value})))*1.18;
+  var plotW=W-left-right, plotH=H-top-bottom, bw=Math.min(90,plotW/rows.length*0.55), gap=plotW/rows.length;
+  function yy(v){return top+plotH-(v/max)*plotH}
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(cfg.title||"Gráfico de barras")+'">';
+  for(var g=0; g<=max; g+=2){ s+='<line x1="'+left+'" x2="'+(W-right)+'" y1="'+yy(g)+'" y2="'+yy(g)+'" stroke="#F0D9CF"/><text x="'+(left-8)+'" y="'+(yy(g)+4)+'" text-anchor="end" font-size="11" fill="#6B5F5C">'+g+'</text>'; }
+  rows.forEach(function(r,i){
+    var x=left+gap*i+(gap-bw)/2, y=yy(r.value), h=top+plotH-y;
+    s+='<rect class="bar" tabindex="0" role="button" data-i="'+i+'" x="'+x+'" y="'+y+'" width="'+bw+'" height="'+h+'" rx="7" fill="'+(i===rows.length-1?"#FF441F":"#F5A58F")+'"><title>'+esc(r.label)+': '+fmt(r.value,cfg.decimals||0)+(cfg.unit||"")+'</title></rect>';
+    s+='<text x="'+(x+bw/2)+'" y="'+(y-7)+'" text-anchor="middle" font-size="14" font-weight="800" fill="#241B1A">'+fmt(r.value,cfg.decimals||0)+(cfg.unit||"")+'</text>';
+    s+='<text x="'+(x+bw/2)+'" y="'+(H-bottom+20)+'" text-anchor="middle" font-size="13" fill="#241B1A">'+esc(r.label)+'</text>';
+  });
+  if(cfg.ref){ var ry=yy(cfg.ref.value); s+='<line x1="'+left+'" x2="'+(W-right)+'" y1="'+ry+'" y2="'+ry+'" stroke="#2F5D8A" stroke-width="2" stroke-dasharray="6 5"/><text x="'+(W-right)+'" y="'+(ry-6)+'" text-anchor="end" font-size="12" font-weight="700" fill="#2F5D8A">'+esc(cfg.ref.label)+'</text>'; }
+  s+='</svg>';
+  el.innerHTML=s; wireBars(el,cfg,readout);
+}
+function wireBars(el,cfg,readout){
+  var bars=$$(".bar",el);
+  function show(b){
+    var r=cfg.rows[+b.getAttribute("data-i")];
+    bars.forEach(function(x){x.classList.remove("sel")}); b.classList.add("sel");
+    if(readout) readout.innerHTML='<b>'+esc(r.label)+': '+(r.value>0?"+":"")+fmt(r.value,cfg.decimals||0)+(cfg.unit||"")+'.</b> '+esc(r.note||"");
+  }
+  bars.forEach(function(b){
+    b.addEventListener("click",function(){show(b)});
+    b.addEventListener("focus",function(){show(b)});
+    b.addEventListener("mouseenter",function(){show(b)});
+    b.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();show(b)}});
+  });
+}
+
+/* ====== NAVEGACIÓN ====== */
+var ORDER=["menu"].concat(SECTIONS.map(function(s){return s.id}));
+function buildNav(){
+  var nav=$("#nav");
+  var html='<button type="button" data-go="menu">'+ico("i-home")+'Menú</button>';
+  SECTIONS.forEach(function(s){html+='<button type="button" data-go="'+s.id+'"><span class="letter">'+s.letter+'</span>'+s.name+'</button>'});
+  nav.innerHTML=html;
+  var grid=$("#menuGrid"), g="";
+  SECTIONS.forEach(function(s){
+    g+='<button type="button" class="menu-card" data-go="'+s.id+'"><div class="badge">'+ico(s.icon)+'</div><small>SECCIÓN '+s.letter+'</small><strong>'+s.name+'</strong><span class="d">'+s.desc+'</span></button>';
+  });
+  grid.innerHTML=g;
+  $$("[data-pager]").forEach(function(p){
+    var id=p.closest(".view").getAttribute("data-view"), i=ORDER.indexOf(id), prev=ORDER[i-1], next=ORDER[i+1];
+    var h='<button type="button" class="btn ghost" data-go="'+(prev||"menu")+'">'+ico("i-prev")+(prev==="menu"||!prev?"Menú":"Anterior: "+nameOf(prev))+'</button>';
+    h+='<button type="button" class="btn ghost" data-go="menu">'+ico("i-home")+'Volver al menú</button>';
+    if(next) h+='<button type="button" class="btn primary" data-go="'+next+'">Siguiente: '+nameOf(next)+ico("i-next")+'</button>';
+    p.innerHTML=h;
+  });
+  document.addEventListener("click",function(e){
+    var b=e.target.closest("[data-go]"); if(b){ go(b.getAttribute("data-go"),true); }
+  });
+}
+function nameOf(id){var s=SECTIONS.filter(function(x){return x.id===id})[0];return s?s.name:"Menú"}
+function go(id,push){
+  if(ORDER.indexOf(id)<0) id="menu";
+  $$(".view").forEach(function(v){ v.hidden = v.getAttribute("data-view")!==id });
+  $$("#nav button").forEach(function(b){ if(b.getAttribute("data-go")===id) b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current") });
+  if(push){ try{ history.pushState(null,"","#"+id) }catch(e){ location.hash="#"+id } }
+  window.scrollTo({top:0});
+  var h=$("#t-"+id); if(h) h.focus({preventScroll:true});
+  if(id==="decision") renderDecision();
+}
+window.addEventListener("popstate",function(){go((location.hash||"#menu").slice(1),false)});
+
+/* ====== A: CONTEXTO ====== */
+function buildContext(){
+  var cfg={title:"Variación de pedidos de corrientazo por ciudad (%)",unit:" %",decimals:0,rows:CITIES.map(function(c){return {label:c.label,value:c.value,note:"Los pedidos de corrientazo en "+c.label+" crecieron "+c.value+" % en lo corrido de 2026 frente al mismo periodo de 2025, según Rappi."}})};
+  hbar($("#ch-cities"),cfg,$("#ro-cities"));
+}
+
+/* ====== B: PANORAMA ====== */
+function buildIndicators(){
+  var host=$("#indicators"), h="";
+  INDICATORS.forEach(function(ind,i){
+    h+='<article class="acc" id="acc-'+ind.id+'">';
+    h+='<button type="button" aria-expanded="'+(i===0?"true":"false")+'" aria-controls="p-'+ind.id+'" id="b-'+ind.id+'">';
+    h+='<span class="num">'+(i+1)+'</span><span><span class="h-title">'+ind.title+'</span><span class="h-fig">'+ind.figure+'</span><span class="src">'+ind.sub+'</span></span><span class="chev">'+ico("i-chev")+'</span></button>';
+    h+='<div class="panel" id="p-'+ind.id+'" role="region" aria-labelledby="b-'+ind.id+'"'+(i===0?"":" hidden")+'>';
+    h+='<p class="chart-title">'+ind.chart.title+'</p><div class="chart" id="c-'+ind.id+'"></div><div class="readout" id="r-'+ind.id+'" aria-live="polite">Toca o enfoca una barra para ver el detalle.</div>';
+    h+='<dl class="facts">'+ind.facts.map(function(f){return '<dt>'+f[0]+'</dt><dd>'+f[1]+'</dd>'}).join("")+'</dl>';
+    h+='</div></article>';
+  });
+  host.innerHTML=h;
+  INDICATORS.forEach(function(ind){ drawIndicator(ind) });
+  $$(".acc>button",host).forEach(function(b){
+    b.addEventListener("click",function(){ toggle(b, b.getAttribute("aria-expanded")!=="true") });
+  });
+  $("#openAll").addEventListener("click",function(){ $$(".acc>button",host).forEach(function(b){toggle(b,true)}) });
+  $("#closeAll").addEventListener("click",function(){ $$(".acc>button",host).forEach(function(b){toggle(b,false)}) });
+  $("#indTable").innerHTML=INDICATORS.map(function(ind){return '<tr>'+ind.row.map(function(c,j){return '<td'+(j===0?' style="font-weight:700"':'')+'>'+c+'</td>'}).join("")+'</tr>'}).join("");
+}
+function toggle(btn,open){
+  btn.setAttribute("aria-expanded",open?"true":"false");
+  var p=document.getElementById(btn.getAttribute("aria-controls")); p.hidden=!open;
+}
+function drawIndicator(ind){
+  var el=$("#c-"+ind.id), ro=$("#r-"+ind.id);
+  if(ind.chart.type==="vbar") vbar(el,ind.chart,ro); else hbar(el,ind.chart,ro);
+}
+
+/* ====== C: TRANSFORMACIÓN ====== */
+function buildDims(){
+  var tabs=$("#dimTabs"), h="";
+  DIMS.forEach(function(d,i){
+    h+='<button type="button" role="tab" id="tab-'+d.id+'" aria-selected="'+(i===0)+'" aria-controls="dimPanel" data-d="'+d.id+'" tabindex="'+(i===0?0:-1)+'">'+ico(d.icon)+d.name+'</button>';
+  });
+  tabs.innerHTML=h;
+  var btns=$$("button",tabs);
+  btns.forEach(function(b,i){
+    b.addEventListener("click",function(){selectDim(b.getAttribute("data-d"))});
+    b.addEventListener("keydown",function(e){
+      var n=-1; if(e.key==="ArrowRight") n=(i+1)%btns.length; if(e.key==="ArrowLeft") n=(i-1+btns.length)%btns.length;
+      if(n>=0){e.preventDefault();btns[n].focus();selectDim(btns[n].getAttribute("data-d"))}
+    });
+  });
+  selectDim(DIMS[0].id);
+}
+function selectDim(id){
+  var d=DIMS.filter(function(x){return x.id===id})[0];
+  $$("#dimTabs button").forEach(function(b){var on=b.getAttribute("data-d")===id;b.setAttribute("aria-selected",on);b.tabIndex=on?0:-1});
+  var links=d.links.length?'<p class="src" style="margin-top:12px">Fuentes: '+d.links.map(function(l){return '<a href="'+l[1]+'" target="_blank" rel="noopener">'+l[0]+'</a>'}).join(" · ")+'</p>':'<p class="src" style="margin-top:12px">Sin datos públicos de Rappi sobre este punto: se presenta como inferencia o hipótesis.</p>';
+  $("#dimPanel").setAttribute("aria-labelledby","tab-"+id);
+  $("#dimPanel").innerHTML='<h3 style="font-size:1.4rem">'+ico(d.icon)+' '+d.name+'</h3><div class="tri">'+
+    '<div class="box opp"><h4>'+ico("i-up")+'Oportunidad '+tagHTML(d.opp.tag)+'</h4><p style="margin:0">'+d.opp.t+'</p></div>'+
+    '<div class="box risk"><h4>'+ico("i-down")+'Riesgo '+tagHTML(d.risk.tag)+'</h4><p style="margin:0">'+d.risk.t+'</p></div>'+
+    '<div class="box cons"><h4>'+ico("i-target")+'Consecuencia empresarial '+(d.consTag?tagHTML(d.consTag):'')+'</h4><p style="margin:0">'+d.cons+'</p></div></div>'+links;
+}
+
+/* ====== D: DECISIÓN ====== */
+var weights=CRITERIA.map(function(c){return c.w});
+var chosen=null;
+function totals(){
+  var sum=weights.reduce(function(a,b){return a+b},0);
+  if(sum<=0) return null;
+  return ALTS.map(function(a){
+    var t=0; a.scores.forEach(function(s,i){t+=s*weights[i]});
+    return {alt:a,total:t/sum};
+  });
+}
+function buildDecision(){
+  var h="";
+  ALTS.forEach(function(a){
+    h+='<button type="button" class="alt" aria-pressed="false" data-a="'+a.id+'">'+(a.recommended?'<span class="tag dec rec">Recomendada</span>':'')+'<div class="letter">'+a.id+'</div><strong>'+a.name+'</strong><span class="d">'+a.desc+'</span></button>';
+  });
+  $("#alts").innerHTML=h;
+  $$(".alt").forEach(function(b){ b.addEventListener("click",function(){ chosen=b.getAttribute("data-a"); renderDecision() }) });
+  var s="";
+  CRITERIA.forEach(function(c,i){
+    s+='<div class="slider"><label for="w'+i+'"><span>'+c.name+'</span><span id="wv'+i+'"></span></label><input type="range" id="w'+i+'" min="0" max="40" step="1" value="'+weights[i]+'" data-i="'+i+'"><div class="hint">'+c.hint+'</div></div>';
+  });
+  $("#sliders").innerHTML=s;
+  $$("#sliders input").forEach(function(r){ r.addEventListener("input",function(){ weights[+r.getAttribute("data-i")]=+r.value; renderDecision() }) });
+  $("#resetW").addEventListener("click",function(){
+    weights=CRITERIA.map(function(c){return c.w});
+    $$("#sliders input").forEach(function(r,i){r.value=weights[i]});
+    renderDecision();
+  });
+  var m='<thead><tr><th>Criterio</th>'+ALTS.map(function(a){return '<th style="text-align:center">'+a.short+'</th>'}).join("")+'</tr></thead><tbody>';
+  CRITERIA.forEach(function(c,i){
+    m+='<tr><td>'+c.name+'</td>'+ALTS.map(function(a){var v=a.scores[i];return '<td class="score" style="background:rgba(255,68,31,'+(v*0.07).toFixed(2)+')">'+v+'</td>'}).join("")+'</tr>';
+  });
+  m+='</tbody>';
+  $("#matrix").innerHTML=m;
+  $("#plan").innerHTML=PLAN.map(function(p){return '<li><b>'+p[0]+'</b><br><small>'+p[1]+'</small></li>'}).join("");
+  $("#kpis").innerHTML=KPIS.map(function(k){return '<tr>'+k.map(function(c,j){return '<td'+(j===0?' style="font-weight:700"':'')+'>'+c+'</td>'}).join("")+'</tr>'}).join("");
+}
+function renderDecision(){
+  var sum=weights.reduce(function(a,b){return a+b},0);
+  CRITERIA.forEach(function(c,i){ var el=$("#wv"+i); if(el) el.textContent = sum>0 ? fmt(weights[i]/sum*100,0)+" %" : "0 %" });
+  $$(".alt").forEach(function(b){ b.setAttribute("aria-pressed", String(b.getAttribute("data-a")===chosen)) });
+  var tt=totals(), rank=$("#rank"), msg=$("#rankMsg");
+  if(!tt){ rank.innerHTML=""; msg.style.display="block"; msg.textContent="Asigna peso a al menos un criterio."; }
+  else{
+    var sorted=tt.slice().sort(function(a,b){return b.total-a.total});
+    var topId=sorted[0].alt.id;
+    rank.innerHTML=tt.map(function(r){
+      return '<div class="row'+(r.alt.id===topId?" top":"")+'"><span>'+r.alt.short+'</span><div class="track"><div class="fill" style="width:'+(r.total/5*100)+'%"></div></div><b>'+fmt(r.total,2)+'</b></div>';
+    }).join("");
+    msg.style.display="block";
+    var gap=sorted[0].total-sorted[1].total;
+    if(topId==="A"){ msg.className="verdict good"; msg.textContent="Con estos pesos gana la alternativa A (ventaja de "+fmt(gap,2)+" puntos). La recomendación se mantiene."; }
+    else { msg.className="verdict mid"; msg.textContent="Con estos pesos gana la alternativa "+topId+": la recomendación depende de cuánto valores el costo inicial y la rapidez frente al beneficio de largo plazo."; }
+  }
+  var d=$("#altDetail");
+  if(!chosen){ d.innerHTML='<p style="margin:0"><b>Elige una alternativa</b> para ver sus ventajas, riesgos y por qué se recomienda o no.</p>'; return; }
+  var a=ALTS.filter(function(x){return x.id===chosen})[0];
+  var mine=tt?tt.filter(function(r){return r.alt.id===chosen})[0].total:null;
+  d.innerHTML='<h3>'+a.name+(a.recommended?' <span class="tag dec">Recomendada</span>':'')+'</h3><p>'+a.desc+'</p>'+
+    '<div class="grid2"><div class="tri"><div class="box opp"><h4>'+ico("i-up")+'Ventajas</h4><ul class="clean">'+a.pros.map(function(x){return '<li>'+x+'</li>'}).join("")+'</ul></div></div>'+
+    '<div class="tri"><div class="box risk"><h4>'+ico("i-down")+'Riesgos</h4><ul class="clean">'+a.cons.map(function(x){return '<li>'+x+'</li>'}).join("")+'</ul></div></div></div>'+
+    '<div class="verdict '+(a.recommended?"good":"mid")+'">'+(a.recommended?"Por qué se recomienda: ":"Por qué no es la principal: ")+a.why+(mine!==null?" Puntuación con tus pesos: "+fmt(mine,2)+" de 5.":"")+'</div>';
+}
+
+/* ====== E: EVIDENCIAS ====== */
+function buildEvidence(){
+  $("#refs").innerHTML=REFS.map(function(r){
+    var t=r[1]==="ok"?'<span class="tag ok">página abierta completa</span>':'<span class="tag ex">extracto de búsqueda</span>';
+    return '<li>'+r[0]+' '+t+'</li>';
+  }).join("");
+  $("#team").textContent=TEAM.join(", ")+" · Empresa: "+COMPANY;
+}
+
+/* ====== INICIO ====== */
+buildNav(); buildContext(); buildIndicators(); buildDims(); buildDecision(); buildEvidence(); renderDecision();
+go((location.hash||"#menu").slice(1),false);
+})();
+</script>
+</body>
+</html>
